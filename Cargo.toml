@@ -1,0 +1,29 @@
+[package]
+name = "picolib"
+version = "0.1.0"
+edition = "2021"
+authors = ["KizzyCode Software Labs./Keziah Biermann <development@kizzycode.de>"]
+keywords = []
+categories = []
+description = "Offers a tiny part of the Raspberry Pi Pico C-SDK APIs as delegates that can be called from Rust"
+license = "BSD-2-Clause OR MIT"
+repository = "https://github.com/KizzyCode/picolib-rust-rp2040"
+readme = "README.md"
+
+
+[badges]
+
+
+[features]
+default = ["panic_handler"]
+panic_handler = []
+
+
+[dependencies]
+
+
+[profile.release]
+overflow-checks = true
+
+[profile.bench]
+overflow-checks = true
