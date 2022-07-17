@@ -12,10 +12,7 @@ pub struct StateMachine {
 }
 impl StateMachine {
     /// Creates a new state machine instance
-    pub fn new<F>(pio: u32, sm: u32) -> Result<Self, Error>
-    where
-        F: FnOnce() -> Result<(), Error>,
-    {
+    pub fn new(pio: u32, sm: u32) -> Result<Self, Error> {
         unsafe { delegates::pico_piosm_start(pio, sm) };
         Ok(Self { pio, sm })
     }
