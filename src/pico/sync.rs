@@ -1,4 +1,4 @@
-//! Implements an atomic
+//! Implements synchronization primitives
 
 use crate::delegates;
 use core::cell::Cell;
