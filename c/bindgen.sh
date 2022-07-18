@@ -10,4 +10,4 @@ bindgen "pico_delegates.h" \
     --use-core --no-layout-tests \
     --allowlist-function "pico_.*" \
     --allowlist-var "pico_.*" \
-    --output "../src/delegates/bindgen.rs"
+    --output "../src/sys/bindgen.rs"

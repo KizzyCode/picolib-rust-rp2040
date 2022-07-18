@@ -31,6 +31,28 @@ void __attribute__((noreturn)) pico_panic();
 
 
 /**
+ * @brief Allocates some memory
+ * 
+ * @param ptr The target pointer
+ * @param size The amount of bytes to allocate
+ */
+void pico_mem_alloc(uint8_t** ptr, uint32_t size);
+/**
+ * @brief Reallocates some memory
+ * 
+ * @param ptr The target pointer to reallocate
+ * @param size The new size to reallocate
+ */
+void pico_mem_realloc(uint8_t** ptr, uint32_t size);
+/**
+ * @brief Frees some allocated memory
+ * 
+ * @param ptr The target pointer to free
+ */
+void pico_mem_free(uint8_t** ptr);
+
+
+/**
  * @brief Gets a char from stdin
  * 
  * @param result The target pointer

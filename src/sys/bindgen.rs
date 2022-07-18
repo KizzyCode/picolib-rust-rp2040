@@ -17,6 +17,26 @@ extern "C" {
     pub fn pico_panic();
 }
 extern "C" {
+    #[doc = " @brief Allocates some memory"]
+    #[doc = ""]
+    #[doc = " @param ptr The target pointer"]
+    #[doc = " @param size The amount of bytes to allocate"]
+    pub fn pico_mem_alloc(ptr: *mut *mut u8, size: u32);
+}
+extern "C" {
+    #[doc = " @brief Reallocates some memory"]
+    #[doc = ""]
+    #[doc = " @param ptr The target pointer to reallocate"]
+    #[doc = " @param size The new size to reallocate"]
+    pub fn pico_mem_realloc(ptr: *mut *mut u8, size: u32);
+}
+extern "C" {
+    #[doc = " @brief Frees some allocated memory"]
+    #[doc = ""]
+    #[doc = " @param ptr The target pointer to free"]
+    pub fn pico_mem_free(ptr: *mut *mut u8);
+}
+extern "C" {
     #[doc = " @brief Gets a char from stdin"]
     #[doc = ""]
     #[doc = " @param result The target pointer"]

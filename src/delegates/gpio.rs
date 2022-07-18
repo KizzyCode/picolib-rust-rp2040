@@ -1,6 +1,6 @@
 //! Implements GPIO related functions
 
-use crate::delegates;
+use crate::sys;
 
 /// A GPIO direction
 #[repr(u8)]
@@ -20,19 +20,19 @@ pub struct Gpio {
 impl Gpio {
     /// Creates a new GPIO handle
     pub fn new(pin: u32, direction: Direction) -> Self {
-        unsafe { delegates::pico_gpio_init(pin, direction as u8) };
+        unsafe { sys::pico_gpio_init(pin, direction as u8) };
         Self { pin }
     }
 
     /// Gets the GPIO input state where low is `false` and high is `true`
     pub fn get(&self) -> bool {
         let mut state = 0;
-        unsafe { delegates::pico_gpio_get(&mut state, self.pin) };
+        unsafe { sys::pico_gpio_get(&mut state, self.pin) };
         state != 0
     }
     /// Sets the GPIO output where low is `false` and high is `true`
     pub fn set(&mut self, state: bool) {
         let state = state.then_some(1).unwrap_or(0);
-        unsafe { delegates::pico_gpio_put(self.pin, state) };
+        unsafe { sys::pico_gpio_put(self.pin, state) };
     }
 }

@@ -1,9 +1,13 @@
 #![no_std]
 #![doc = include_str!("../README.md")]
 
+// Import alloc
+pub extern crate alloc;
+
 #[macro_use]
 pub mod error;
-#[macro_use]
 pub mod delegates;
-pub mod pico;
-pub mod utils;
+pub mod sys;
+
+/// Re-export the pico APIs
+pub use delegates::*;

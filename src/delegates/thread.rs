@@ -1,6 +1,6 @@
 //! Implements thread/multicore related functions
 
-use crate::delegates;
+use crate::sys;
 use core::time::Duration;
 
 /// Sleeps for the given amount of time
@@ -14,15 +14,15 @@ pub fn sleep(duration: Duration) {
     let millis = u32::try_from(millis).expect("Sleep interval is too large");
 
     // Call delegates
-    unsafe { delegates::pico_sleep_ms(millis) };
-    unsafe { delegates::pico_sleep_us(micros) };
+    unsafe { sys::pico_sleep_ms(millis) };
+    unsafe { sys::pico_sleep_us(micros) };
 }
 
 /// Starts `f` on the second core
 pub fn core1_start(f: unsafe extern "C" fn()) {
-    unsafe { delegates::pico_core1_start(Some(f)) }
+    unsafe { sys::pico_core1_start(Some(f)) }
 }
 /// Stops and resets the second core
 pub fn core1_halt() {
-    unsafe { delegates::pico_core1_halt() }
+    unsafe { sys::pico_core1_halt() }
 }

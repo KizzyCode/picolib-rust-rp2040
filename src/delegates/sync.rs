@@ -1,6 +1,6 @@
 //! Implements synchronization primitives
 
-use crate::delegates;
+use crate::sys;
 use core::cell::Cell;
 
 /// A threadsafe, shared lock
@@ -20,7 +20,7 @@ impl Lock {
         fn try_lock(flag: &Cell<bool>) -> bool {
             // Lock the hardware spinlock
             let mut irq = 0;
-            unsafe { delegates::pico_spinlock_lock(&mut irq) };
+            unsafe { sys::pico_spinlock_lock(&mut irq) };
 
             // Set the lock flag
             let state = flag.get();
@@ -29,12 +29,14 @@ impl Lock {
             }
 
             // Unlock the hardware spinlock
-            unsafe { delegates::pico_spinlock_unlock(irq) };
+            unsafe { sys::pico_spinlock_unlock(irq) };
             !state
         }
 
         // Spin-loop until we can acquire the lock
-        while !try_lock(&self.flag) { /* Busy wait */ }
+        while !try_lock(&self.flag) {
+            unsafe { sys::pico_sleep_us(1) }
+        }
     }
     /// Releases the lock
     ///
@@ -43,11 +45,11 @@ impl Lock {
     pub fn release(&self) {
         // Lock the hardware spinlock
         let mut irq = 0;
-        unsafe { delegates::pico_spinlock_lock(&mut irq) };
+        unsafe { sys::pico_spinlock_lock(&mut irq) };
 
         // Set the flag and unlock the hardware spinlock
         self.flag.set(false);
-        unsafe { delegates::pico_spinlock_unlock(irq) };
+        unsafe { sys::pico_spinlock_unlock(irq) };
     }
 
     /// Provides a scope-based synchronized access (i.e. acquires the lock, calls `f` and releases the lock afterwards)

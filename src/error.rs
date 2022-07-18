@@ -1,6 +1,6 @@
 //! Implements the panic handler
 
-use crate::{delegates, utils::cursor::Cursor};
+use crate::{sys, delegates::stdio::FmtTarget};
 use core::{
     fmt::{self, Display, Formatter, Write},
     panic::PanicInfo,
@@ -38,12 +38,12 @@ macro_rules! error {
 /// Handles a panic
 pub fn panic_handler(panic: &PanicInfo) -> ! {
     // Create a panic message
-    let _buf = unsafe { &mut delegates::pico_panic_buf };
-    let mut buf = Cursor::new(_buf);
+    let _buf = unsafe { &mut sys::pico_panic_buf };
+    let mut buf = FmtTarget::new(_buf);
     let _ = write!(&mut buf, "{}", panic);
 
     // Call the delegate
-    unsafe { delegates::pico_panic() };
+    unsafe { sys::pico_panic() };
 
     // Loop forever (the delegate should never return but we cannot prove it to rust)
     #[allow(clippy::empty_loop)]

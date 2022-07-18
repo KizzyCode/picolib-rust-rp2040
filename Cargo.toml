@@ -15,8 +15,7 @@ readme = "README.md"
 
 
 [features]
-default = ["panic_handler"]
-panic_handler = []
+default = []
 
 
 [dependencies]

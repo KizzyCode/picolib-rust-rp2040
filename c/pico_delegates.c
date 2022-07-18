@@ -5,6 +5,7 @@
  */
 
 #include <stdio.h>
+#include <malloc.h>
 #include "pico/stdlib.h"
 #include "pico/multicore.h"
 #include "hardware/pio.h"
@@ -43,12 +44,32 @@ void __attribute__((noreturn)) pico_panic() {
 }
 
 
+void pico_mem_alloc(uint8_t** ptr, uint32_t size) {
+    *ptr = malloc(size);
+    if (*ptr == NULL) {
+        panic("Failed to allocate %lu bytes of memory", size);
+    }
+}
+void pico_mem_realloc(uint8_t** ptr, uint32_t size) {
+    *ptr = realloc(*ptr, size);
+    if (*ptr == NULL) {
+        panic("Failed to reallocate %lu bytes of memory", size);
+    }
+}
+void pico_mem_free(uint8_t** ptr) {
+    if (*ptr != NULL) {
+        free(*ptr);
+    }
+    *ptr = NULL;
+}
+
+
 void pico_stdio_getc(uint8_t* result) {
     while (true) {
         // Get and validate the char
         const int c = getc(stdin);
         if (c >= 0 && c <= 255) {
-            *result = (char)c;
+            *result = (uint8_t)c;
             return;
         }
     }

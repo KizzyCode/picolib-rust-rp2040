@@ -1,5 +1,8 @@
-//! The bindgen generated types for the shared API
-#![allow(non_camel_case_types)]
-#![allow(unused)]
+//! Offers safe abstractions over the delegate methods
 
-include!("bindgen.rs");
+pub mod gpio;
+pub mod memory;
+pub mod pio;
+pub mod stdio;
+pub mod sync;
+pub mod thread;
