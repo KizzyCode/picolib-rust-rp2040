@@ -74,6 +74,15 @@ void pico_stdio_getc(uint8_t* result) {
         }
     }
 }
+int32_t pico_stdio_getc_timeout(uint8_t* result, uint32_t us) {
+    // Get and validate the char
+    const int c = getchar_timeout_us(us);
+    if (c >= 0 && c <= 255) {
+        *result = (uint8_t)c;
+        return 0;
+    }
+    return -1;
+}
 void pico_stdio_putc(uint8_t value) {
     putc(value, stdout);
 }

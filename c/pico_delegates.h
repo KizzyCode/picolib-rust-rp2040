@@ -59,6 +59,14 @@ void pico_mem_free(uint8_t** ptr);
  */
 void pico_stdio_getc(uint8_t* result);
 /**
+ * @brief Gets a char from stdin
+ * 
+ * @param result The target pointer
+ * @param us The timeout in milliseconds
+ * @return `0` on success or `-1` in case of a timeout
+ */
+int32_t pico_stdio_getc_timeout(uint8_t* result, uint32_t us);
+/**
  * @brief Writes a char to stdout
  * 
  * @param value The char to write

@@ -43,6 +43,14 @@ extern "C" {
     pub fn pico_stdio_getc(result: *mut u8);
 }
 extern "C" {
+    #[doc = " @brief Gets a char from stdin"]
+    #[doc = ""]
+    #[doc = " @param result The target pointer"]
+    #[doc = " @param us The timeout in milliseconds"]
+    #[doc = " @return `0` on success or `-1` in case of a timeout"]
+    pub fn pico_stdio_getc_timeout(result: *mut u8, us: u32) -> i32;
+}
+extern "C" {
     #[doc = " @brief Writes a char to stdout"]
     #[doc = ""]
     #[doc = " @param value The char to write"]
