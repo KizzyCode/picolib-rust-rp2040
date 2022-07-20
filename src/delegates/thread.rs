@@ -5,17 +5,20 @@ use core::time::Duration;
 
 /// Sleeps for the given amount of time
 pub fn sleep(duration: Duration) {
-    // Split the duration into seconds and remainder
-    let secs = duration.as_secs();
-    let micros = duration.subsec_micros();
+    let micros = u64::try_from(duration.as_micros()).expect("Sleep interval is too large");
+    unsafe { sys::pico_sleep_us(micros, 0) };
+}
+/// Performs a busy wait for the given amount of time
+pub fn wait(duration: Duration) {
+    let micros = u64::try_from(duration.as_micros()).expect("Sleep interval is too large");
+    unsafe { sys::pico_sleep_us(micros, 1) };
+}
 
-    // Convert the seconds into milliseconds
-    let millis = secs.checked_mul(1000).expect("Sleep interval is too large");
-    let millis = u32::try_from(millis).expect("Sleep interval is too large");
-
-    // Call delegates
-    unsafe { sys::pico_sleep_ms(millis) };
-    unsafe { sys::pico_sleep_us(micros) };
+/// The time inverval that has passed since boot
+pub fn uptime() -> Duration {
+    let mut micros = 0;
+    unsafe { sys::pico_time_us(&mut micros) };
+    Duration::from_micros(micros)
 }
 
 /// Starts `f` on the second core

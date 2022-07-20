@@ -35,7 +35,7 @@ impl Lock {
 
         // Spin-loop until we can acquire the lock
         while !try_lock(&self.flag) {
-            unsafe { sys::pico_sleep_us(1) }
+            unsafe { sys::pico_sleep_us(1, 1) }
         }
     }
     /// Releases the lock

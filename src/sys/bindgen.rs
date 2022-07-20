@@ -57,16 +57,17 @@ extern "C" {
     pub fn pico_stdio_putc(value: u8);
 }
 extern "C" {
-    #[doc = " @brief Sleeps the given amount of milliseconds"]
-    #[doc = ""]
-    #[doc = " @param ms The amount of milliseconds to sleep"]
-    pub fn pico_sleep_ms(ms: u32);
-}
-extern "C" {
     #[doc = " @brief Sleeps the given amount of microseconds"]
     #[doc = ""]
     #[doc = " @param us The amount of milliseconds to sleep"]
-    pub fn pico_sleep_us(us: u32);
+    #[doc = " @param busy Whether to perform a busy wait or a low-power sleep"]
+    pub fn pico_sleep_us(us: u64, busy: u8);
+}
+extern "C" {
+    #[doc = " @brief Returns the amount of microseconds passed since boot"]
+    #[doc = ""]
+    #[doc = " @param time The target pointer"]
+    pub fn pico_time_us(time: *mut u64);
 }
 extern "C" {
     #[doc = " @brief Launches some code function on core 1"]

@@ -88,11 +88,14 @@ void pico_stdio_putc(uint8_t value) {
 }
 
 
-void pico_sleep_ms(uint32_t ms) {
-    sleep_ms(ms);
+void pico_sleep_us(uint64_t us, uint8_t busy) {
+    busy == 0 ? sleep_us(us) : busy_wait_us(us);
 }
-void pico_sleep_us(uint32_t us) {
-    sleep_us(us);
+
+
+void pico_time_us(uint64_t* time) {
+    absolute_time_t timestamp = get_absolute_time();
+    *time = to_us_since_boot(timestamp);
 }
 
 

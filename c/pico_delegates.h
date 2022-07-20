@@ -75,17 +75,20 @@ void pico_stdio_putc(uint8_t value);
 
 
 /**
- * @brief Sleeps the given amount of milliseconds
- * 
- * @param ms The amount of milliseconds to sleep
- */
-void pico_sleep_ms(uint32_t ms);
-/**
  * @brief Sleeps the given amount of microseconds
  * 
  * @param us The amount of milliseconds to sleep
+ * @param busy Whether to perform a busy wait or a low-power sleep
  */
-void pico_sleep_us(uint32_t us);
+void pico_sleep_us(uint64_t us, uint8_t busy);
+
+
+/**
+ * @brief Returns the amount of microseconds passed since boot
+ * 
+ * @param time The target pointer
+ */
+void pico_time_us(uint64_t* time);
 
 
 /**
