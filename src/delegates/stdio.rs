@@ -128,5 +128,6 @@ macro_rules! print {
 /// Prints a line to stdout
 #[macro_export]
 macro_rules! println {
+    () => {{ print_impl!(eol: "\n", args: "") }};
     ($($arg:tt)*) => {{ print_impl!(eol: "\n", args: $($arg)*) }};
 }
