@@ -10,10 +10,10 @@
                     "test",
                     "--no-run",
                     "--lib",
-                    "--package=FIXME"
+                    "--package=picolib"
                 ],
                 "filter": {
-                    "name": "FIXME",
+                    "name": "picolib",
                     "kind": "lib"
                 }
             },
